@@ -1,31 +1,31 @@
 #!/bin/bash
-cd "$(dirname "$0")"
-cd ..
+cd -- "$(dirname "$0")" || exit 1
+cd .. || exit 1
 rm -rf minetest-texture-pack
 rm -rf uctextures
 mkdir textures
 mkdir uctextures
-cd uctextures
+cd uctextures || exit 1
 mkdir b
 mkdir i
-cd ..
+cd .. || exit 1
 
 
-FILES=$(dirname "$0")/../assets/minecraft/textures/blocks/*.png
+FILES="$(dirname "$0")/../assets/minecraft/textures/blocks/*.png"
 for f in $FILES
 do
-	cp $f "uctextures/b/"
+	cp "$f" "uctextures/b/"
 done
 
-FILES=$(dirname "$0")/../assets/minecraft/textures/items/*.png
+FILES="$(dirname "$0")/../assets/minecraft/textures/items/*.png"
 for f in $FILES
 do
-	cp $f "uctextures/i/"
+	cp "$f" "uctextures/i/"
 done
 
-cd uctextures
+cd uctextures || exit 1
 
-while read p; do
+while read -r p; do
 	if [ -n "$p" ]
 	then
 		if [ -e "trans.png" ]
