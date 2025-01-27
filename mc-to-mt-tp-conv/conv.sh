@@ -10,33 +10,24 @@ mkdir b
 mkdir i
 cd .. || exit 1
 
-
-FILES="$(dirname "$0")/../assets/minecraft/textures/blocks/*.png"
-for f in $FILES
-do
-	cp "$f" "uctextures/b/"
+for f in "$(dirname "$0")/../assets/minecraft/textures/blocks/"*.png; do
+	cp -- "$f" "uctextures/b/"
 done
-
-FILES="$(dirname "$0")/../assets/minecraft/textures/items/*.png"
-for f in $FILES
-do
-	cp "$f" "uctextures/i/"
+for f in "$(dirname "$0")/../assets/minecraft/textures/items/"*.png; do
+	cp -- "$f" "uctextures/i/"
 done
 
 cd uctextures || exit 1
 
 while read -r p; do
-	if [ -n "$p" ]
-	then
-		if [ -e "trans.png" ]
-		then
+	if [ -n "$p" ]; then
+		if [ -e "trans.png" ]; then
 			mv trans.png "../textures/$p"
 		else
-			mv "$p" trans.png
+			mv -- "$p" trans.png
 		fi
 	fi
-done < ../mc-to-mt-tp-conv/transtable.txt
-
+done <../mc-to-mt-tp-conv/transtable.txt
 
 #####################################
 convert "b/destroy_stage_0.png" \
@@ -49,7 +40,7 @@ convert "b/destroy_stage_0.png" \
 	"b/destroy_stage_7.png" \
 	"b/destroy_stage_8.png" \
 	"b/destroy_stage_9.png" \
-			+append "../textures/crack-anylength.png"
+	+append "../textures/crack-anylength.png"
 #####################################
 
 cd ..
